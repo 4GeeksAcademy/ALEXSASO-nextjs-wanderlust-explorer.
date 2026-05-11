@@ -11,22 +11,25 @@ const FavoritesContext = createContext<FavoritesContextValue | undefined>(undefi
 
 interface FavoritesProviderProps {
   children: React.ReactNode;
+  value?: FavoritesContextValue;
 }
 
-export const FavoritesProvider = ({ children }: FavoritesProviderProps) => {
+export const FavoritesProvider = ({ children, value: externalValue }: FavoritesProviderProps) => {
   const [favorites, setFavorites] = useState<string[]>([]);
 
   const toggleFavorite = (id: string): void => {
     setFavorites((prev) => (prev.includes(id) ? prev.filter((favoriteId) => favoriteId !== id) : [...prev, id]));
   };
 
-  const value = useMemo(
+  const internalValue = useMemo(
     () => ({
       favorites,
       toggleFavorite,
     }),
     [favorites],
   );
+
+  const value = externalValue ?? internalValue;
 
   return <FavoritesContext.Provider value={value}>{children}</FavoritesContext.Provider>;
 };

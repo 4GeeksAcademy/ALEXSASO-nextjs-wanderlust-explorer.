@@ -1,6 +1,8 @@
 'use client';
 
 import { ExperienceCard } from '@/components/ExperienceCard';
+import { FilterBar } from '@/components/FilterBar';
+import { SearchBar } from '@/components/SearchBar';
 import { useExperienceFiltersContext } from '@/context/ExperienceFiltersContext';
 import { useFavorites } from '@/context/FavoritesContext';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
@@ -68,26 +70,17 @@ export default function ExplorerPage() {
       </div>
 
       <div className="mb-10 flex flex-col gap-4 md:flex-row">
-        <input
-          type="text"
+        <SearchBar
           placeholder={t.searchPlaceholder}
           defaultValue={currentFilters.search}
-          onChange={(event) => handleFilterChange('search', event.target.value)}
-          className="flex-1 rounded-lg border p-3 outline-none focus:ring-2 focus:ring-blue-500"
+          onSearch={(value) => handleFilterChange('search', value)}
         />
 
-        <select
-          defaultValue={currentFilters.category}
-          onChange={(event) => handleFilterChange('category', event.target.value)}
-          className="rounded-lg border bg-white p-3"
-        >
-          <option value="">{t.categoryAll}</option>
-          <option value="Adventure">Adventure</option>
-          <option value="Food">Food</option>
-          <option value="Culture">Culture</option>
-          <option value="Nature">Nature</option>
-          <option value="Wellness">Wellness</option>
-        </select>
+        <FilterBar
+          currentCategory={currentFilters.category}
+          onCategoryChange={(value) => handleFilterChange('category', value)}
+          allLabel={t.categoryAll}
+        />
 
         <input
           type="text"
