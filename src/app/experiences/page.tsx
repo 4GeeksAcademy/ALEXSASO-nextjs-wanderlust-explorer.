@@ -31,7 +31,7 @@ const uiText = {
 } as const;
 
 export default function ExplorerPage() {
-  const { filtered, handleFilterChange, currentFilters } = useExperienceFiltersContext();
+  const { filtered, updateFilters, filters } = useExperienceFiltersContext();
   const { favorites, toggleFavorite } = useFavorites();
   const searchParams = useSearchParams();
   const pathname = usePathname();
@@ -72,21 +72,21 @@ export default function ExplorerPage() {
       <div className="mb-10 flex flex-col gap-4 md:flex-row">
         <SearchBar
           placeholder={t.searchPlaceholder}
-          defaultValue={currentFilters.search}
-          onSearch={(value) => handleFilterChange('search', value)}
+          defaultValue={filters.search}
+          onSearch={(value) => updateFilters('search', value)}
         />
 
         <FilterBar
-          currentCategory={currentFilters.category}
-          onCategoryChange={(value) => handleFilterChange('category', value)}
+          currentCategory={filters.category}
+          onCategoryChange={(value) => updateFilters('category', value)}
           allLabel={t.categoryAll}
         />
 
         <input
           type="text"
           placeholder={t.destinationPlaceholder}
-          defaultValue={currentFilters.destination}
-          onChange={(event) => handleFilterChange('destination', event.target.value)}
+          defaultValue={filters.destination}
+          onChange={(event) => updateFilters('destination', event.target.value)}
           className="flex-1 rounded-lg border p-3 outline-none focus:ring-2 focus:ring-blue-500"
         />
       </div>

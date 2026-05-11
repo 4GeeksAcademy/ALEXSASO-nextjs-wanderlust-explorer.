@@ -1,28 +1,36 @@
 'use client';
 
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 interface NavbarProps {
   favoriteCount: number;
 }
 
 export const Navbar = ({ favoriteCount }: NavbarProps) => {
-  return (
-    <header className="sticky top-0 z-20 border-b border-slate-200 bg-white/90 backdrop-blur">
-      <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4">
-        <Link href="/experiences" className="text-lg font-black tracking-tight text-slate-900">
-          Wanderlust Explorer
-        </Link>
+  const pathname = usePathname();
 
-        <div className="flex items-center gap-5 text-sm font-semibold text-slate-700">
-          <Link href="/experiences" className="hover:text-blue-600">
-            Explorar / Explore
+  const links = [
+    { name: 'Home', href: '/' },
+    { name: 'Explorar', href: '/experiences' },
+    { name: 'Favoritos', href: '/favorites' },
+    { name: 'Perfil', href: '/profile' },
+  ];
+
+  return (
+    <nav className="sticky top-0 z-50 flex justify-between border-b bg-white p-6">
+      <h2 className="text-xl font-bold">Wanderlust Explorer</h2>
+      <div className="flex gap-4">
+        {links.map((link) => (
+          <Link
+            key={link.href}
+            href={link.href}
+            className={pathname === link.href ? 'font-bold text-blue-600' : 'text-gray-600'}
+          >
+            {link.name} {link.name === 'Favoritos' ? `(${favoriteCount})` : ''}
           </Link>
-          <Link href="/favorites" className="hover:text-blue-600">
-            Favoritos / Favorites ({favoriteCount})
-          </Link>
-        </div>
-      </nav>
-    </header>
+        ))}
+      </div>
+    </nav>
   );
 };

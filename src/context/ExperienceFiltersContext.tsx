@@ -1,7 +1,7 @@
 'use client';
 
 import { createContext, useContext } from 'react';
-import { FilterKey, useExperienceFilters } from '@/hooks/useExperienceFilters';
+import { useExperienceFilters } from '@/hooks/useExperienceFilters';
 import { Experience } from '@/types';
 
 interface CurrentFilters {
@@ -12,8 +12,8 @@ interface CurrentFilters {
 
 interface ExperienceFiltersContextValue {
   filtered: Experience[];
-  handleFilterChange: (key: FilterKey, value: string) => void;
-  currentFilters: CurrentFilters;
+  updateFilters: (key: string, value: string) => void;
+  filters: CurrentFilters;
 }
 
 const ExperienceFiltersContext = createContext<ExperienceFiltersContextValue | undefined>(undefined);
@@ -23,14 +23,14 @@ interface ExperienceFiltersProviderProps {
 }
 
 export const ExperienceFiltersProvider = ({ children }: ExperienceFiltersProviderProps) => {
-  const { filtered, handleFilterChange, currentFilters } = useExperienceFilters();
+  const { filtered, updateFilters, filters } = useExperienceFilters();
 
   return (
     <ExperienceFiltersContext.Provider
       value={{
         filtered,
-        handleFilterChange,
-        currentFilters,
+        updateFilters,
+        filters,
       }}
     >
       {children}

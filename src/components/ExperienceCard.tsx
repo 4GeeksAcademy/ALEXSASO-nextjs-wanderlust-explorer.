@@ -7,15 +7,11 @@ const cardText = {
   es: {
     removeFavorite: 'Quitar de favoritos',
     addFavorite: 'Agregar a favoritos',
-    saved: 'Guardado',
-    save: 'Guardar',
     rating: 'Valoracion',
   },
   en: {
     removeFavorite: 'Remove from favorites',
     addFavorite: 'Add to favorites',
-    saved: 'Saved',
-    save: 'Save',
     rating: 'Rating',
   },
 } as const;
@@ -40,10 +36,14 @@ export const ExperienceCard = ({ experience, isFavorite, onToggleFavorite, langu
             event.preventDefault();
             onToggleFavorite(experience.id);
           }}
-          className="absolute right-3 top-3 rounded-full bg-white/80 p-2 text-xs font-semibold uppercase tracking-wide backdrop-blur-sm transition hover:bg-white"
+          className="absolute right-3 top-3 rounded-full bg-white/90 p-2 shadow-sm backdrop-blur-sm transition-transform hover:scale-110"
           aria-label={isFavorite ? t.removeFavorite : t.addFavorite}
         >
-          {isFavorite ? t.saved : t.save}
+          {isFavorite ? (
+            <span className="text-xl text-red-500">❤️</span>
+          ) : (
+            <span className="text-xl text-gray-400">🤍</span>
+          )}
         </button>
       </div>
 
